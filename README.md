@@ -46,7 +46,7 @@ The frontend application should be available at http://localhost:3000.
 ## Demo
 
 <p style="text-align: center">
-    <img src="docs/images/demo.gif" alt="Architecture"/>
+    <img src="docs/images/demo1.gif" alt="Architecture"/>
 </p>
 
 ## Documentation
