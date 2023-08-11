@@ -33,3 +33,29 @@ class ShiftInDBBase(ShiftBase):
 
 class Shift(ShiftInDBBase):
     pass
+
+
+class ImportShiftBase(BaseModel):
+    file: str
+    import_date: datetime
+
+
+class ImportShiftCreate(ImportShiftBase):
+    pass
+
+
+class ImportShiftUpdate(ImportShiftBase):
+    pass
+
+
+class ImportShiftInDBBase(ImportShiftBase):
+    class Config:
+        orm_mode = True
+
+
+class ImportShift(ImportShiftInDBBase):
+    pass
+
+
+class ImportShiftInDB(ImportShiftInDBBase):
+    pass

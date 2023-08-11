@@ -2,49 +2,52 @@ import React, {useState, useEffect} from "react";
 import {uploadFiles} from "@/services/api";
 
 const FileUpload: React.FC = () => {
-    const [selectedFile, setSelectedFile] = useState<File>();
+    const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
     const [progress, setProgress] = useState<number>(0);
     const [message, setMessage] = useState<string>("");
     const [fileInfos, setFileInfos] = useState<string[]>([]);
 
-    const selectFile = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const selectedFiles = event.target.files as FileList;
-        setSelectedFile(selectedFiles?.[0]);
+    const selectFiles = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const files = event.target.files as FileList;
+        setSelectedFiles(Array.from(files));
         setProgress(0);
     };
 
     const upload = async () => {
         setProgress(0);
 
-        if (!selectedFile) return;
+        if (!selectedFiles.length) return;
 
         try {
-            const response = await uploadFiles([selectedFile]);
-            setMessage("File uploaded successfully!");
-            setFileInfos(prevFiles => [...prevFiles, response.filename]);
+            const responses = await Promise.all(selectedFiles.map(file => uploadFiles([file])));
+            setMessage("Files uploaded successfully!");
+            setFileInfos(prevFiles => [...prevFiles, ...responses.map(res => res.filename)]);
         } catch (error) {
-            setMessage(`Failed to upload file: ${(error as Error).message}`);
+            setMessage(`Failed to upload files: ${(error as Error).message}`);
         }
 
-        setSelectedFile(undefined);
+        setSelectedFiles([]);
     };
 
     return (
         <div className="space-y-4">
             <div className="flex space-x-4 items-center">
-                <input
-                    type="file"
-                    accept=".csv, .xls, .xlsx"
-                    onChange={selectFile}
-                    className="px-2 py-1 border rounded"
-                />
-                <button
-                    className="px-4 py-2 bg-blue-500 text-white rounded disabled:opacity-50"
-                    disabled={!selectedFile}
-                    onClick={upload}
-                >
-                    Upload
-                </button>
+                <div className="flex space-x-4 items-center">
+                    <input
+                        type="file"
+                        accept=".csv, .xls, .xlsx"
+                        onChange={selectFiles}
+                        multiple
+                        className="px-2 py-1 border rounded"
+                    />
+                    <button
+                        className="px-4 py-2 bg-blue-500 text-white rounded disabled:opacity-50"
+                        disabled={!selectedFiles.length}
+                        onClick={upload}
+                    >
+                        Upload
+                    </button>
+                </div>
             </div>
 
             {progress > 0 && (

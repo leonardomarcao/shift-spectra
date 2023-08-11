@@ -1,5 +1,5 @@
 import pandas as pd
-from app.crud import crud_employer
+from app.crud import crud_employer, crud_import_shift_reference
 from app.db.session import sync_session as SessionLocal
 from app.models.shift import Shift
 from sqlalchemy.orm import Session
@@ -8,6 +8,10 @@ from sqlalchemy.orm import Session
 def import_shift(file_path):
     # create a new session
     db: Session = SessionLocal()
+    file_name = file_path.split('/')[-1]
+
+    # Creates a new import reference
+    import_reference = crud_import_shift_reference.create(db, obj_in={"file": file_name})
 
     try:
         # Load data
@@ -42,7 +46,7 @@ def import_shift(file_path):
                 event_index = 0
                 for index, row in group_date.sort_values(by='marcacao').iterrows():
                     if event_index % 4 == 0:
-                        last_shift = Shift(employer_id=employer.identifier)
+                        last_shift = Shift(employer_id=employer.identifier, import_shift_id=import_reference.id)
                         db.add(last_shift)
 
                     setattr(last_shift, event_order[event_index % 4], row['marcacao'])
@@ -52,6 +56,7 @@ def import_shift(file_path):
     except Exception as e:
         print(e)
         db.rollback()
+        crud_import_shift_reference.remove(db, id=import_reference.id)
     finally:
         # close the session
         db.close()

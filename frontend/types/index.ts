@@ -10,7 +10,10 @@ export interface ShiftGraphProps {
 export type DataItem = {
     year: number;
     month: number;
-    total_records: number;
+    records: number;
+    import_data: string;
+    import_time: string;
+    import_file: string;
 };
 
 export interface ShiftTableProps {

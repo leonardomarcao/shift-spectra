@@ -7,7 +7,7 @@ export default function ShiftTable({ data }: ShiftTableProps) {
             <table className="min-w-full divide-y divide-gray-300 dark:divide-gray-600">
                 <thead className="bg-gray-200 dark:bg-gray-700">
                 <tr>
-                    {['Employer ID', 'Employer Name', 'Start Shift', 'End Shift', 'Start Lunch', 'End Lunch'].map(header => (
+                    {['Employer ID', 'Employer Name', 'Start Shift', 'End Shift', 'Start Lunch', 'End Lunch', 'File'].map(header => (
                         <th key={header}
                             className="px-4 py-2 text-left text-xs font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wider">{header}</th>
                     ))}
@@ -22,6 +22,7 @@ export default function ShiftTable({ data }: ShiftTableProps) {
                         <td className="px-4 py-2">{item.end_shift}</td>
                         <td className="px-4 py-2">{item.start_lunch}</td>
                         <td className="px-4 py-2">{item.end_lunch}</td>
+                        <td className="px-4 py-2">{item.import_shift.file}</td>
                     </tr>
                 )) : null}
                 </tbody>
