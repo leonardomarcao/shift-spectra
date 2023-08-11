@@ -1,0 +1,27 @@
+files: ^backend/.*\.(py|cfg)$
+repos:
+    - repo: https://github.com/pre-commit/pre-commit-hooks
+      rev: v4.4.0
+      hooks:
+        - id: check-added-large-files
+          args: [--maxkb=1000]
+    - repo: https://github.com/psf/black
+      rev: 23.3.0
+      hooks:
+        - id: black
+          args: [--line-length=120, --target-version=py36, --skip-string-normalization]
+    - repo: https://github.com/asottile/setup-cfg-fmt
+      rev: v2.2.0
+      hooks:
+        - id: setup-cfg-fmt
+          args : [--line-length=120]
+    - repo: https://github.com/timothycrosley/isort
+      rev: 5.12.0
+      hooks:
+        - id: isort
+          args: [--profile=black, --line-length=120]
+    - repo: https://github.com/asottile/add-trailing-comma
+      rev: v2.4.0
+      hooks:
+        - id: add-trailing-comma
+          args: [--py36-plus]
