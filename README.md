@@ -2,7 +2,9 @@
 
 Shift Spectra is a comprehensive solution for visualizing work shifts made by pharmacy collaborators.
 
-![architecture.png](docs%2Fimages%2Farchitecture.png)
+<p style="text-align: center">
+    <img src="docs/images/architecture.png" alt="Architecture"/>
+</p>
 
 ## Objective
 
@@ -27,7 +29,7 @@ offers a sleek user interface for seamless interaction.
 1. Clone the repository:
 
 ```bash
-git clone [repository_url]
+git clone git@github.com:leonardomarcao/shift-spectra.git
 ```
 
 2. Navigate to the project's root directory.
@@ -43,7 +45,9 @@ The frontend application should be available at http://localhost:3000.
 
 ## Demo
 
-![demo.gif](docs%2Fimages%2Fdemo.gif)
+<p style="text-align: center">
+    <img src="docs/images/demo.gif" alt="Architecture"/>
+</p>
 
 ## Documentation
 
